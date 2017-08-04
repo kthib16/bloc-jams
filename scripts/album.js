@@ -28,6 +28,20 @@ var albumMarconi = {
   ]
 };
 
+var albumThree = {
+  title: "Three",
+  artist: "Kevin",
+  label: "Sony",
+  year: "2017",
+  albumArtUrl: 'assets/images/album_covers/09.png',
+  songs: [
+    { title: 'Song 1', duration: '2:45' },
+    { title: 'Song 2', duration: '3:03' },
+    { title: 'Song 3', duration: '1:45' },
+    { title: 'Song 4', duration: '4:44' }
+  ]
+}
+
 var createSongRow = function(songNumber, songName, songLength) {
   var template =
     '<tr class="album-view-song-item">'
@@ -40,12 +54,13 @@ var createSongRow = function(songNumber, songName, songLength) {
    return template;
 };
 
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
 var setCurrentAlbum = function(album) {
-     var albumTitle = document.getElementsByClassName('album-view-title')[0];
-     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-     var albumImage = document.getElementsByClassName('album-cover-art')[0];
-     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
@@ -61,4 +76,14 @@ var setCurrentAlbum = function(album) {
 
  window.onload = function() {
      setCurrentAlbum(albumPicasso);
+
+     var albums = [albumPicasso, albumMarconi, albumThree];
+     var index = 1;
+     albumImage.addEventListener('click', function(){
+       setCurrentAlbum(albums[index]);
+       index++;
+       if(index == albums.length){
+         index = 0;
+       }
+     })
  };
