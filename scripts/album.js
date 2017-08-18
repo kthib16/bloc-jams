@@ -51,26 +51,29 @@ var createSongRow = function(songNumber, songName, songLength) {
    +'</tr>'
    ;
 
-   return template;
+   return $(template);
 };
 
-var albumTitle = document.getElementsByClassName('album-view-title')[0];
-var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-var albumImage = document.getElementsByClassName('album-cover-art')[0];
-var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
 var setCurrentAlbum = function(album) {
 
-     albumTitle.firstChild.nodeValue = album.title;
-     albumArtist.firstChild.nodeValue = album.artist;
-     albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
-     albumImage.setAttribute('src', album.albumArtUrl);
+    $albumTitle = $('.album-view-title');
+    $albumArtist = $('.album-view-artist');
+    $albumInfo = $('.album-view-release-info');
+    $albumImage = $('.album-cover-art');
+    $albumSongList = $('.album-view-song-list');
 
-     albumSongList.innerHTML = '';
+    $albumTitle.text(album.title);
+    $albumArtist.text(album.artist);
+    $albumInfo.text(album.year + ' ' + album.label);
+    $albumImage.attr('src',album.albumArtUrl);
+
+
+     $albumSongList.empty();
 
      for (var i = 0; i < album.songs.length; i++) {
-         albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+         var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+         $albumSongList.append($newRow);
      }
  };
 
