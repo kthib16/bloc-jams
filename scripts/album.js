@@ -163,6 +163,22 @@ var setCurrentAlbum = function(album) {
    $lastSongNumberCell.html(lastSongNumber);
  };
 
+ var togglePlayFromPlayerBar = function() {
+      var songNumberCell = $(this).find('.song-item-number');
+
+      if(currentSoundFile.isPaused()){
+        songNumberCell.html(pauseButtonTemplate);
+        $playPauseButton.html(playerBarPauseButton);
+        currentSoundFile.play();
+      }
+      else{
+        songNumberCell.html(playButtonTemplate);
+        $playPauseButton.html(playerBarPlayButton);
+        currentSoundFile.pause();
+      }
+
+ }
+
 var updatePlayerBarSong = function() {
       $(".currently-playing .song-name").text(currentSongFromAlbum.title);
       $(".currently-playing .artist-name").text(currentAlbum.artist);
@@ -183,11 +199,13 @@ var currentVolume = 80;
 
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
+var $playPauseButton = $('.main-controls .play-pause');
 
  $(document).ready(function() {
      setCurrentAlbum(albumPicasso);
      $previousButton.click(previousSong);
      $nextButton.click(nextSong);
+     $playPauseButton.click(togglePlayFromPlayerBar);
 
      var albums = [albumPicasso,albumMarconi, albumThree];
      var index = 1;
